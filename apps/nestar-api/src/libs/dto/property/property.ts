@@ -28,13 +28,13 @@ export class Property {
 	propertyPrice: number;
 
 	@Field(() => Number)
-	propertySquare: number;
+	propertySquare?: number;
 
 	@Field(() => Int)
-	propertyBeds: number;
+	propertyBeds?: number;
 
 	@Field(() => Int)
-	propertyRooms: number;
+	propertyRooms?: number;
 
 	@Field(() => Int)
 	propertyViews: number;
@@ -52,7 +52,7 @@ export class Property {
 	propertyImages: string[];
 
 	@Field(() => String, { nullable: true })
-	propertyDesc?: number;
+	propertyDesc?: string;
 
 	@Field(() => Boolean)
 	propertyBarter: boolean;

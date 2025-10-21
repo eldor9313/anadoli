@@ -29,23 +29,21 @@ export class PropertyInput {
 	@Field(() => Number)
 	propertyPrice: number;
 
-	@IsNotEmpty()
+	@IsOptional()
 	@Field(() => Number)
-	propertySquare: number;
+	propertySquare?: number;
 
-	@IsNotEmpty()
+	@IsOptional()
 	@IsInt()
-	@Min(1)
 	@Field(() => Int)
-	propertyBeds: number;
+	propertyBeds?: number;
 
-	@IsNotEmpty()
+	@IsOptional()
 	@IsInt()
-	@Min(1)
 	@Field(() => Int)
-	propertyRooms: number;
+	propertyRooms?: number;
 
-	@IsNotEmpty()
+	@IsOptional()
 	@Field(() => [String])
 	propertyImages: string[];
 
