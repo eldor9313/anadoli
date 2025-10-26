@@ -13,51 +13,41 @@ import { FollowInquiry } from '../../libs/dto/follow/follow.input';
 export class FollowResolver {
 	constructor(private readonly followService: FollowService) {}
 
-	// subscribe
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => Follower)
-	public async subscribe(
-		@Args('input') input: string,
-		@AuthMember('_id') memberId: ObjectId, //
-	): Promise<Follower> {
+	@Mutation(() => Follower)
+	public async subscribe(@Args('input') input: string, @AuthMember('_id') memberId: ObjectId): Promise<Follower> {
 		console.log('Mutation: subscribe');
 		const followingId = shapeIntoMongoObjectId(input);
 		return await this.followService.subscribe(memberId, followingId);
 	}
 
-	// unsubscribe
 	@UseGuards(AuthGuard)
-	@Mutation((returns) => Follower)
-	public async unsubscribe(
-		@Args('input') input: string,
-		@AuthMember('_id') memberId: ObjectId, //
-	): Promise<Follower> {
+	@Mutation(() => Follower)
+	public async unsubscribe(@Args('input') input: string, @AuthMember('_id') memberId: ObjectId): Promise<Follower> {
 		console.log('Mutation: unsubscribe');
 		const followingId = shapeIntoMongoObjectId(input);
 		return await this.followService.unsubscribe(memberId, followingId);
 	}
 
-	// getMemberFollowings
 	@UseGuards(WithoutGuard)
-	@Query((returns) => Followings)
+	@Query(() => Followings)
 	public async getMemberFollowings(
 		@Args('input') input: FollowInquiry,
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Followings> {
-		console.log('Mutation: getMemberFollowings');
+		console.log('Query: getMemberFollowings');
 		const { followerId } = input.search;
 		input.search.followerId = shapeIntoMongoObjectId(followerId);
 		return await this.followService.getMemberFollowings(memberId, input);
 	}
 
-	// getMemberFollowers
 	@UseGuards(WithoutGuard)
-	@Query((returns) => Followers)
+	@Query(() => Followers)
 	public async getMemberFollowers(
 		@Args('input') input: FollowInquiry,
 		@AuthMember('_id') memberId: ObjectId,
 	): Promise<Followers> {
-		console.log('Mutation: getMemberFollowers');
+		console.log('Query: getMemberFollowers');
 		const { followingId } = input.search;
 		input.search.followingId = shapeIntoMongoObjectId(followingId);
 		return await this.followService.getMemberFollowers(memberId, input);
