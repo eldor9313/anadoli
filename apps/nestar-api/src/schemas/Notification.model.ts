@@ -12,7 +12,7 @@ const NotificationSchema = new Schema(
 		notificationStatus: {
 			type: String,
 			enum: NotificationStatus,
-			default: NotificationStatus.UNREAD,
+			default: NotificationStatus.WAIT,
 		},
 
 		notificationGroup: {

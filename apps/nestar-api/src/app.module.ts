@@ -29,7 +29,8 @@ import { SocketModule } from './socket/socket.module';
 			},
 		}),
 		ComponentsModule, // HTTP
-		DatabaseModule, SocketModule, // TCP
+		DatabaseModule,
+		SocketModule, // TCP
 	],
 	controllers: [AppController],
 	providers: [AppService, AppResolver],

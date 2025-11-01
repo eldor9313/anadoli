@@ -3,13 +3,15 @@ import { registerEnumType } from '@nestjs/graphql';
 export enum NotificationType {
 	LIKE = 'LIKE',
 	COMMENT = 'COMMENT',
+	ALARM = 'ALARM',
+	FOLLOW = 'FOLLOW',
 }
 registerEnumType(NotificationType, {
 	name: 'NotificationType',
 });
 
 export enum NotificationStatus {
-	UNREAD = 'UNREAD',
+	WAIT = 'WAIT',
 	READ = 'READ',
 }
 registerEnumType(NotificationStatus, {
