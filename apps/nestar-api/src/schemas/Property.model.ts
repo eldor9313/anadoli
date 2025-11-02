@@ -33,7 +33,6 @@ const PropertySchema = new Schema(
 
 		propertyPrice: {
 			type: Number,
-			required: true,
 		},
 
 		propertySquare: {

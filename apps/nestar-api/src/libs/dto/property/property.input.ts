@@ -25,9 +25,9 @@ export class PropertyInput {
 	@Field(() => String)
 	propertyTitle: string;
 
-	@IsNotEmpty()
+	@IsOptional()
 	@Field(() => Number)
-	propertyPrice: number;
+	propertyPrice?: number;
 
 	@IsOptional()
 	@Field(() => Number)

@@ -25,7 +25,7 @@ export class Property {
 	propertyTitle: string;
 
 	@Field(() => Number)
-	propertyPrice: number;
+	propertyPrice?: number;
 
 	@Field(() => Number)
 	propertySquare?: number;
