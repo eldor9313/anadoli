@@ -21,30 +21,30 @@ export class NotificationResolver {
 	@UseGuards(AuthGuard)
 	@Query(() => Notifications)
 	async myNotifications(
-		@AuthMember('_id') meId: ObjectId,
+		@AuthMember('_id') memberId: ObjectId,
 		@Args('input') input: NotificationInquiry,
 	): Promise<Notifications> {
-		return (await this.notificationService.myNotifications(meId, input)) as any;
+		return (await this.notificationService.myNotifications(memberId, input)) as any;
 	}
 
 	// Unread count badge
 	@UseGuards(AuthGuard)
 	@Query(() => Int)
-	async unreadNotificationsCount(@AuthMember('_id') meId: ObjectId): Promise<number> {
-		return this.notificationService.unreadCount(meId);
+	async unreadNotificationsCount(@AuthMember('_id') memberId: ObjectId): Promise<number> {
+		return this.notificationService.unreadCount(memberId);
 	}
 
 	// Mark single notification as READ
 	@UseGuards(AuthGuard)
 	@Mutation(() => Notification)
-	async markNotificationRead(@AuthMember('_id') meId: ObjectId, @Args('id') id: string): Promise<Notification> {
-		return this.notificationService.markRead(meId, shapeIntoMongoObjectId(id));
+	async markNotificationRead(@AuthMember('_id') memberId: ObjectId, @Args('id') id: string): Promise<Notification> {
+		return this.notificationService.markRead(memberId, shapeIntoMongoObjectId(id));
 	}
 
 	@UseGuards(AuthGuard)
 	@Mutation(() => Int)
-	async markAllNotificationsRead(@AuthMember('_id') meId: ObjectId): Promise<number> {
-		return this.notificationService.markAllRead(meId);
+	async markAllNotificationsRead(@AuthMember('_id') memberId: ObjectId): Promise<number> {
+		return this.notificationService.markAllRead(memberId);
 	}
 
 	@UseGuards(AuthGuard)
@@ -56,7 +56,7 @@ export class NotificationResolver {
 	// Create a welcome notification for current user (useful for testing)
 	@UseGuards(AuthGuard)
 	@Mutation(() => Notification)
-	async createWelcomeNotification(@AuthMember('_id') meId: ObjectId): Promise<Notification> {
-		return this.notificationService.createWelcome(meId);
+	async createWelcomeNotification(@AuthMember('_id') memberId: ObjectId): Promise<Notification> {
+		return this.notificationService.createWelcome(memberId);
 	}
 }

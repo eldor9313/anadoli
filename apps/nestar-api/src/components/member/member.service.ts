@@ -16,6 +16,7 @@ import { LikeGroup } from '../../libs/enums/like.enum';
 import { LikeService } from '../like/like.service';
 import { Follower, Following, MeFollowed } from '../../libs/dto/follow/follow';
 import { lookupAuthMemberLiked } from '../../libs/config';
+import { NotificationService } from './../notification/notification.service';
 
 @Injectable()
 export class MemberService {
@@ -25,6 +26,7 @@ export class MemberService {
 		private authService: AuthService,
 		private viewService: ViewService,
 		private likeService: LikeService,
+		private readonly notificationService: NotificationService,
 	) {}
 
 	// Signup logic
@@ -33,7 +35,9 @@ export class MemberService {
 		input.memberPassword = await this.authService.hashPassword(input.memberPassword);
 		try {
 			const result = await this.memberModel.create(input);
-			// Authentication via TOKEN
+			void this.notificationService
+				.createWelcome(result._id as any)
+				.catch((e) => console.warn('createWelcome failed:', e?.message));
 			result.accessToken = await this.authService.createToken(result);
 			return result;
 		} catch (err) {
@@ -168,9 +172,14 @@ export class MemberService {
 			likeGroup: LikeGroup.MEMBER,
 		};
 
+		/////
 		const modifier: number = await this.likeService.toggleLike(input);
-		const result = await this.memberStatsEditor({ _id: likeRefId, targetKey: 'memberLikes', modifier: modifier });
-
+		if (modifier === 1 && String(memberId) !== String(likeRefId)) {
+			void this.notificationService
+				.createOnMemberLike(likeRefId as any, memberId as any)
+				.catch((e) => console.warn('createOnMemberLike failed:', e?.message));
+		}
+		const result = await this.memberStatsEditor({ _id: likeRefId, targetKey: 'memberLikes', modifier });
 		if (!result) throw new InternalServerErrorException(Message.SOMETHING_WENT_WRONG);
 		return result;
 	}

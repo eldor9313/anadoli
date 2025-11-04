@@ -2,9 +2,9 @@ import { Logger } from '@nestjs/common';
 import { OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server } from 'ws';
 import * as WebSocket from 'ws';
-import { AuthService } from '../components/auth/auth.service';
 import { Member } from '../libs/dto/member/member';
 import * as url from 'url';
+import { AuthService } from '../components/auth/auth.service';
 
 interface MessagePayload {
 	event: string;
@@ -14,7 +14,7 @@ interface MessagePayload {
 
 interface InfoPayload {
 	event: string;
-	totalClient: number;
+	totalClients: number;
 	memberData: Member;
 	action: string;
 }
@@ -55,7 +55,7 @@ export class SocketGateway implements OnGatewayInit {
 
 		const infoMsg: InfoPayload = {
 			event: 'info',
-			totalClient: this.summaryClient,
+			totalClients: this.summaryClient,
 			memberData: authMember,
 			action: 'joined',
 		};
@@ -73,13 +73,13 @@ export class SocketGateway implements OnGatewayInit {
 
 		const infoMsg: InfoPayload = {
 			event: 'info',
-			totalClient: this.summaryClient,
+			totalClients: this.summaryClient,
 			memberData: authMember,
 			action: 'left',
 		};
+
 		this.broadcastMessage(client, infoMsg);
 	}
-
 	@SubscribeMessage('message')
 	public async handleMessage(client: WebSocket, payload: string): Promise<void> {
 		const authMember = this.clientsAuthMap.get(client);
@@ -110,10 +110,3 @@ export class SocketGateway implements OnGatewayInit {
 		});
 	}
 }
-
-/*
-MESSAGE TARGET:
-1. Client (only client)
-2. Broadcast (except client)
-3. Emit (all client)
-*/
