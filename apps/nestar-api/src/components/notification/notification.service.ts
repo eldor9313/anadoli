@@ -120,8 +120,8 @@ export class NotificationService {
 			{
 				notificationType: NotificationType.ALARM,
 				notificationGroup: NotificationGroup.MEMBER,
-				notificationTitle: 'Welcome to Cozypick',
-				notificationDesc: 'Glad to have you here. Explore and enjoy!',
+				notificationTitle: 'Welcome to Anadoli',
+				notificationDesc: 'So good to have you here. Adventure awaits!',
 				receiverId,
 			} as any,
 			receiverId,
@@ -142,8 +142,8 @@ export class NotificationService {
 			{
 				notificationType: NotificationType.LIKE,
 				notificationGroup: NotificationGroup.PROPERTY,
-				notificationTitle: 'Your property got a new like',
-				notificationDesc: (prop as any).propertyTitle ?? 'Someone liked your listing.',
+				notificationTitle: 'New like',
+				notificationDesc: (prop as any).propertyTitle ?? 'Liked your listing',
 				receiverId: ownerId,
 				propertyId,
 			} as any,
@@ -200,8 +200,8 @@ export class NotificationService {
 			{
 				notificationType: NotificationType.COMMENT,
 				notificationGroup: NotificationGroup.PROPERTY,
-				notificationTitle: 'Your property got a new comment',
-				notificationDesc: (prop as any).propertyTitle ?? 'Someone commented on your listing.',
+				notificationTitle: 'New comment',
+				notificationDesc: (prop as any).propertyTitle ?? 'Comment added',
 				receiverId: ownerId,
 				propertyId,
 			} as any,
@@ -222,8 +222,8 @@ export class NotificationService {
 			{
 				notificationType: NotificationType.FOLLOW,
 				notificationGroup: NotificationGroup.MEMBER,
-				notificationTitle: 'You have a new follower',
-				notificationDesc: `${followerName} started following you.`,
+				notificationTitle: 'New follower',
+				notificationDesc: `${followerName} followed you.`,
 				receiverId: followingId,
 			} as any,
 			followerId,
